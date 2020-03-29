@@ -134,11 +134,13 @@ button:focus {
 *::-webkit-scrollbar {
   display: none;
 }
-
+::-webkit-scrollbar { display:none }
 /* Hide scrollbar for IE and Edge */
 * {
-  -ms-overflow-style: none;
+  -ms-overflow-style: none !important;
+
 }
+
 
 .wins-badge {
   right: -0.5rem;

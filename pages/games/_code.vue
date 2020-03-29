@@ -97,14 +97,22 @@
           <card v-if="game.started" type="black" :pick="game.blackCard.pick" :text="game.blackCard.text">
           </card>
           <card v-else type="black" text="">
-            <h1 class="text-center text-xl mt-4">Waiting for players</h1>
 
-            <div class="flex w-full justify-center flex-col items-center">
+
+            <div class="flex w-full items-center justify-start flex-col ">
+              <div @click="copyCode" class="flex w-full flex-col">
+                <h1 class="text-center text-xl">Game Code:</h1>
+                <h1 class="text-center text-3xl mt-1">{{code}}</h1>
+                <h1 class="text-center mt-1 text-xs">Click to copy or share the link with your friends</h1>
+              </div>
+
+
               <button :class="{'disabled': game.players.length < 3}" @click="startGame"
-                      class="btn btn-primary text-sm mt-10 font-bold text-center">Start Game
+                      class="btn btn-primary text-sm  font-bold text-center mt-4 mb-3">Start Game
               </button>
-              <h6 v-if="game.players.length < 3" class="text-sm mt-5 text-center">You need at least 3 players to start
-                the game</h6>
+              <h1 class="text-center text-xl text-orange-500 blinking-text">Waiting for players</h1>
+
+              <h6 v-if="game.players.length < 3" class="text-sm mt-5 text-center"></h6>
 
             </div>
 
@@ -157,7 +165,7 @@
 
             </div>
             <div key="waiting" class="w-full justify-center" v-else>
-              <div v-for="(card,index) in game.players" class="game-card w-1/3 px-1 inline-block pb-2"
+              <div v-for="index in game.players.length - 1" class="game-card w-1/3 px-1 inline-block pb-2"
                    :key="`${index}-waiting`">
                 <card type="white" :text="''">
                   <h3 class="text-center">Waiting for players to play</h3>
@@ -180,7 +188,7 @@
         </div>
         <div class="deck w-full nowrap overflow-scroll px-3">
           <div class="flex justify-center">
-            <h1 class="text-white text-xl text-gray-600 mt-4">Game isn't started yet</h1>
+            <h1 class="text-white text-xl text-gray-600 mt-4">The game has not started yet</h1>
           </div>
         </div>
 
@@ -268,7 +276,15 @@
             console.log('socket connected')
         }
 
-
+        copyCode(){
+            let dummy = document.createElement("textarea");
+            document.body.appendChild(dummy);
+            dummy.value = this.code;
+            dummy.select();
+            document.execCommand("copy");
+            document.body.removeChild(dummy);
+            alert("Code copied to the clipboard")
+        }
         joinGame() {
             if (!this.code) {
                 this.errorMessage = 'Please enter the game code';
