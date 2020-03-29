@@ -148,7 +148,7 @@
                 <card v-for="card in player" :key="card" :judging="true" @pick="pick(index)"
                       type="white"
                       class="mb-2"
-                      :text="`judging-${card}`"></card>
+                      :text="card"></card>
                 <div class="flex justify-center w-full">
                   <button v-if="game.judging && isJudge" @click="pick(index)" class="btn btn-primary btn-sm">Pick
                   </button>
