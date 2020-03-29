@@ -1,0 +1,204 @@
+/* purgecss start ignore */
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+/* purgecss end ignore */
+@import 'tailwindcss/utilities';
+
+html {
+  font-family: 'Roboto';
+  word-spacing: 1px;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  box-sizing: border-box;
+}
+
+.nowrap {
+  white-space: nowrap;
+}
+
+.cards-stack:nth-child(1) {
+  transform: rotate(3deg);
+}
+
+.cards-stack :nth-child(2) {
+  transform: rotate(-5deg);
+}
+
+.cards-stack-black :nth-child(1) {
+  transform: rotate(-2deg);
+}
+
+.cards-stack-black :nth-child(2) {
+  transform: rotate(-5deg);
+}
+
+.shadow-lg-black {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 1);
+}
+
+.stack {
+  box-shadow: 0 0.0625em 0.1875em 0 rgba(255, 255, 255, 0.1), 0 0.5em 0 -0.25em #f2f2f2, 0 0.5em 0.1875em -0.25em rgba(255, 255, 255, 0.1);
+}
+
+.stack-black {
+  box-shadow: 0 0.0625em 0.1875em 0 rgba(0, 0, 0, 1), 0 0.5em 0 -0.25em rgba(0, 0, 0, 1), 0 0.5em 0.1875em -0.25em rgba(0, 0, 0, 0.1);
+}
+
+input:focus {
+  outline: none;
+}
+
+input {
+  @apply text-gray-900 rounded px-3 py-3;
+
+}
+
+button:focus {
+  outline: none;
+}
+
+.btn {
+  @apply py-2 px-4 rounded text-white font-bold;
+}
+
+.btn:hover {
+  @apply;
+}
+
+.btn-primary {
+  @apply bg-indigo-700;
+}
+
+.btn-primary:hover {
+  @apply bg-indigo-800;
+}
+
+.btn-secondary {
+  @apply bg-gray-700;
+}
+
+.btn-secondary:hover {
+  @apply bg-gray-900;
+}
+
+.card-overlay {
+  top: 0;
+  height: 100%;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  @apply rounded-lg
+}
+
+.card-overlay .btn {
+  padding-bottom: 0.25rem;
+  padding-top: 0.25rem;
+}
+
+.card-bottom-title {
+  white-space: normal;
+  line-height: 1;
+
+}
+.btn-sm {
+
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}
+
+.font-full {
+  /*font-size: 100%;*/
+
+}
+
+.card-text-back {
+  font-size: 50%;
+  line-height: 1;
+}
+
+.card-text {
+  white-space: normal;
+  line-height: 1.1;
+  left: 0;
+  word-break: break-word;
+  height: 90%;
+  overflow-y: scroll;
+}
+
+.game-card * {
+  /*transition: all 0.1s cubic-bezier(.57, .21, .69, 1.25);*/
+}
+
+*::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE and Edge */
+* {
+  -ms-overflow-style: none;
+}
+
+.wins-badge {
+  right: -0.5rem;
+  top: -0.5rem;
+}
+
+.blinking-text {
+  animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
+.btn.disabled {
+  @apply bg-purple-800;
+  @apply text-gray-500;
+  cursor: not-allowed;
+}
+
+.game {
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.game::-webkit-scrollbar {
+  display: none;  /* Safari and Chrome */
+}
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
+
+.list-enter-active,
+.list-leave-active,
+.list-move {
+  transition: 500ms cubic-bezier(0.59, 0.12, 0.34, 0.95);
+  transition-property: opacity, transform;
+
+}
+
+.list-enter {
+  opacity: 0;
+  transform: translateY(150px);
+}
+
+.list-enter-to {
+  opacity: 1;
+  transform: translateY(150)
+}
+
+.list-leave-active {
+  /*position: absolute;*/
+}
+
+.list-leave-to {
+  opacity: 0;
+  transform: translateY(100px);
+  transform-origin: center top;
+}
