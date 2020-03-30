@@ -26,8 +26,7 @@ export class Game {
   admin: string;
 
   constructor(manager: GameManager, judge: Player, packs: string[], customCards: CustomCard[]) {
-    // this.code = Math.random().toString(36).substring(7);
-    this.code = "test";
+    this.code = Math.random().toString(36).substring(7);
     this.manager = manager;
     this.setupCards(packs, customCards);
     this.judge = judge;
