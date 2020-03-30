@@ -146,6 +146,10 @@ button:focus {
   right: -0.5rem;
   top: -0.5rem;
 }
+.kick-badge {
+  left: -0.5rem;
+  bottom: -0.5rem;
+}
 
 .blinking-text {
   animation: blinker 1s linear infinite;

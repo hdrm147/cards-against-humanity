@@ -22,14 +22,17 @@ export class Game {
   previousCard: BlackCard | null = null;
   winingCards: WhiteCard[] | null = [];
   lastWinner: string | null = null;
+  shuffledJudgingCards: string[][] = [];
+  admin: string;
 
   constructor(manager: GameManager, judge: Player, packs: string[], customCards: CustomCard[]) {
-    this.code = Math.random().toString(36).substring(7);
-
+    // this.code = Math.random().toString(36).substring(7);
+    this.code = "test";
     this.manager = manager;
     this.setupCards(packs, customCards);
     this.judge = judge;
     judge.cards = this.getCards();
+    this.admin = judge.username;
     this.players = [judge];
     this.sendNotification(`${judge.username} created the game`);
     this.blackCard = new BlackCard("", 1);
@@ -97,8 +100,7 @@ export class Game {
   }
 
   isJudging(): boolean {
-    let waitingPlayers = this.players.filter(player => !player.played && (this.judge && this.judge.username != player.username));
-    return waitingPlayers.length === 0
+    return this.players.filter(player => !player.played && (this.judge.username != player.username)).length === 0;
   }
 
   findPlayer(username: string): Player | undefined {
@@ -116,6 +118,8 @@ export class Game {
       player.playedCards = [];
       player.played = false;
     });
+    this.shuffledJudgingCards = [];
+
     if (!this.judge)
       return;
 
@@ -148,9 +152,7 @@ export class Game {
     if (!this.isJudging()) {
       return [];
     }
-    return this.players.filter(player => this.judge && player.username != this.judge.username).map(player => {
-      return player.playedCards;
-    }).sort(() => Math.random() - 0.5);
+    return this.shuffledJudgingCards;
   }
 
   pick(cards: Array<string>) {
@@ -171,7 +173,7 @@ export class Game {
       this.winingCards = winner.playedCards.map(text => {
         return new WhiteCard(text);
       });
-
+      this.shuffledJudgingCards = [];
       this.players.forEach(player => {
         player.playedCards = [];
         player.played = false;
@@ -184,11 +186,12 @@ export class Game {
   }
 
   check() {
-    if (this.judge == null)
-      return;
-
-    let waitingPlayers = this.players.filter(player => !player.played && (this.judge && this.judge.username != player.username));
+    console.log(this.players);
+    let waitingPlayers = this.players.filter(player => !player.played && (this.judge.username != player.username));
     if (waitingPlayers.length === 0) {
+      this.shuffledJudgingCards = this.players.filter(player => player.username != this.judge.username).map(player => {
+        return player.playedCards;
+      }).sort(() => Math.random() - 0.5);
       this.sync(`${this.judge.username} should start judging now`, 'start');
     }
     console.log(`Waiting Players: ${waitingPlayers.length}`);
@@ -209,6 +212,48 @@ export class Game {
     return this.players[0];
   }
 
+  leave(player: Player, kick: boolean = false, successor: string | undefined = undefined) {
+    let index = this.players.indexOf(player);
+    if (kick && player.username === this.admin) {
+      return;
+    }
+    if (this.admin === player.username && successor) {
+      this.admin = successor;
+      this.sync(`${successor} has been promoted to admin`);
+    }
+    if (this.judge.username === player.username) {
+      this.players.forEach(player => {
+        player.playedCards = [];
+        player.played = false;
+      });
+      this.shuffledJudgingCards = [];
+      let nextPlayer = this.players[index + 1];
+      if (nextPlayer)
+        this.judge = nextPlayer;
+      else
+        this.judge = this.players[0];
+
+      this.players.splice(index, 1);
+
+      this.drawBlackCard();
+
+    } else {
+      this.shuffledJudgingCards = [];
+      this.players.splice(index, 1);
+    }
+    if (kick)
+      this.sync(`${this.admin} kicked ${player.username}`);
+    else
+      this.sync(`${player.username} left the game`);
+
+    this.check();
+  };
+
+  kick(player: Player) {
+    this.leave(player, true);
+
+  };
+
   serialize() {
     let players = this.players.map(player => {
       return {
@@ -228,7 +273,8 @@ export class Game {
       notifications: this.notifications,
       winingCards: this.winingCards,
       previousCard: this.previousCard,
-      lastWinner: this.lastWinner
+      lastWinner: this.lastWinner,
+      admin: this.admin
     }
   }
 }

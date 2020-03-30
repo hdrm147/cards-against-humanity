@@ -22,6 +22,16 @@ module.exports = function (manager: GameManager) {
     }
     res.json({success: true, cards: data.player.cards});
   });
+  router.post('/games/:code/leave', (req: any, res: any) => {
+    let data = validate(req, res);
+    if (!data) {
+      return;
+    }
+
+    data.game.leave(data.player,false,req.body.successor);
+
+    res.json({success: true});
+  });
 
   router.post('/games/:code/pick', (req: any, res: any) => {
     let data = validate(req, res);
@@ -32,7 +42,17 @@ module.exports = function (manager: GameManager) {
     res.json({success: true});
 
   });
+  router.post('/games/:code/kick', (req: any, res: any) => {
+    let data = validate(req, res);
+    if (!data || data.player.username != data.game.admin) {
+      return;
+    }
+    let player = data.game.findPlayer(req.body.kick);
+    if (player)
+      data.game.kick(player)
 
+    res.json({success: true});
+  })
 
   // Skip Black Card;
   router.post('/games/:code/skip', (req: any, res: any) => {
