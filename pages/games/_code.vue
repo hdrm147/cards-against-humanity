@@ -1,5 +1,5 @@
 <template>
-  <div v-if="step === 'join'" class="flex w-full h-screen items-center justify-center">
+  <div v-if="step === 'join'" class="flex w-full h-screen items-center justify-center flex-col">
     <div class="card bg-gray-800 w-full p-4 rounded shadow">
       <h2 class="text-white text-2xl">Welcome to</h2>
       <h1 class="text-white text-4xl font-bold leading-none">Cards Against Humanity</h1>
@@ -14,7 +14,8 @@
                placeholder="Pick a username...">
         <input v-model="password" type="text" class="mt-5 w-full"
                placeholder="Set a password (Optional)">
-        <small class="leading-tight mt-2 text-blue-300">The password is optional, but you might need it if you want to join if you refreshed the page or changed the device</small>
+        <small class="leading-tight mt-2 text-blue-300">The password is optional, but you might need it if you want to
+          join if you refreshed the page or changed the device</small>
         <div class="flex flex-col items-center w-full -mx-2 justify-center">
           <div class="flex w-full my-2">
             <span class="text-white text-base text-red-600 font-bold"> {{errorMessage}}</span>
@@ -35,6 +36,14 @@
 
 
     </div>
+    <div class="flex w-full mt-4 px-4 flex-col items-center">
+      <img class="w-1/6 rounded-full" src="/telegram.jpg" alt="">
+      <span class="text-white text-center mt-2">
+           <a target="_blank" href="https://t.me/cards_against_humanity" class="text-indigo-400 font-bold text-center">Click Here</a>
+ Join our telegram group to find players and share feedback
+    </span>
+    </div>
+
   </div>
 
   <div class="w-full" v-else-if="game">
@@ -508,6 +517,10 @@
     overflow: scroll;
     height: 80px;
     @apply px-4;
+  }
+
+  .link {
+    color: orangered !important;
   }
 
   /* Sample `apply` at-rules with Tailwind CSS
