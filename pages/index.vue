@@ -1,5 +1,5 @@
 <template>
-  <div class="flex w-full h-screen items-center justify-center flex-col items-center">
+  <div class="flex w-full sm:w-2/3 md:w-2/3 lg:w-2/4 xl:w-1/5 h-screen items-center justify-center flex-col items-center">
     <div class="card bg-gray-800 w-full p-4 rounded shadow">
       <h2 class="text-white text-2xl">Welcome to</h2>
       <h1 class="text-white text-4xl font-bold leading-none">Cards Against Humanity</h1>

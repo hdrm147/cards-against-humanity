@@ -81,7 +81,7 @@ export class Game {
 
   getCards(): Array<WhiteCard> {
     let cards: Array<WhiteCard> = [];
-    for (let i = 0; i < 8; i++) {
+    for (let i = 0; i < 7; i++) {
       let card = this.getCard();
       if (card)
         cards.push(card);

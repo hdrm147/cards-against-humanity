@@ -1,6 +1,6 @@
 <template>
   <div v-if="step === 'join'" class="flex w-full h-screen items-center justify-center flex-col">
-    <div class="card bg-gray-800 w-full p-4 rounded shadow">
+    <div class="card bg-gray-800 w-10/12 sm:w-2/3 md:w-2/3 lg:w-2/4 xl:w-2/7 p-4 rounded shadow">
       <h2 class="text-white text-2xl">Welcome to</h2>
       <h1 class="text-white text-4xl font-bold leading-none">Cards Against Humanity</h1>
       <div class="border-b border-gray-700 mt-3 w-full"></div>
@@ -36,7 +36,7 @@
 
 
     </div>
-    <div class="flex w-full mt-4 px-4 flex-col items-center">
+    <div class="flex w-full mt-4 px-4 flex-col items-center sm:w-2/3 md:w-2/3 lg:w-2/4 xl:w-1/5">
       <img class="w-1/6 rounded-full" src="/telegram.jpg" alt="">
       <span class="text-white text-center mt-2">
            <a target="_blank" href="https://t.me/cards_against_humanity" class="text-indigo-400 font-bold text-center">Click Here</a>
@@ -46,180 +46,185 @@
 
   </div>
 
-  <div class="w-full" v-else-if="game">
-    <div class="flex flex-col w-full px-2 mt-4">
+  <div class="w-full flex flex-col items-center" v-else-if="game">
+    <div class="flex flex-col w-3/4 sm:w-2/3 md:w-2/4 lg:w-2/7 xl:w-1/5">
+      <div class="flex flex-col w-full">
 
-      <div class="flex px-2 justify-between">
-        <h3 class="text-white text-xl my-2 font-bold text-sm">Players</h3>
-        <a v-if="!choosingSuccessor" @click="leaveGame(null)"
-           class="cursor-pointer text-indigo-500 text-xl my-2 font-bold text-sm">Leave</a>
-        <a @click="cancelLeave" v-if="choosingSuccessor && isAdmin"
-           class="cursor-pointer text-indigo-500 text-xl my-2 font-bold text-sm">Cancel</a>
+        <div class="flex px-2 justify-between">
+          <h3 class="text-white text-xl my-2 font-bold text-sm">Players</h3>
+          <a v-if="!choosingSuccessor" @click="leaveGame(null)"
+             class="cursor-pointer text-indigo-500 text-xl my-2 font-bold text-sm">Leave</a>
+          <a @click="cancelLeave" v-if="choosingSuccessor && isAdmin"
+             class="cursor-pointer text-indigo-500 text-xl my-2 font-bold text-sm">Cancel</a>
 
-      </div>
-      <div v-if="choosingSuccessor && isAdmin" class="flex w-full items-center flex-col">
-        <span class="text-white font-bold text-xl text-orange-500 w-2/3 text-center">Who should be the admin once you leave?</span>
-        <span class="text-white font-bold  text-white w-2/3 text-center">Click to choose</span>
-      </div>
-      <div class="flex flex-wrap w-full">
-        <div class="flex w-1/3 justify-center" v-for="player in game.players" :key="player.username">
-          <div @click="choosingSuccessor ? leaveGame(player.username) : cancelLeave"
-               class="w-full bg-white justify-center rounded mx-2 my-2 relative shadow"
-               :class="{'bg-purple-400':game.judge === player.username,'cursor-pointer': choosingSuccessor}">
-            <h2 class="text-center font-bold pt-2 flex justify-center items-center">
+        </div>
+        <div v-if="choosingSuccessor && isAdmin" class="flex w-full items-center flex-col">
+          <span class="text-white font-bold text-xl text-orange-500 w-2/3 text-center">Who should be the admin once you leave?</span>
+          <span class="text-white font-bold  text-white w-2/3 text-center">Click to choose</span>
+        </div>
+        <div class="flex flex-wrap w-full">
+          <div class="flex w-1/3 justify-center" v-for="player in game.players" :key="player.username">
+            <div @click="choosingSuccessor ? leaveGame(player.username) : cancelLeave"
+                 class="w-full bg-white justify-center rounded mx-2 my-2 relative shadow"
+                 :class="{'bg-purple-400':game.judge === player.username,'cursor-pointer': choosingSuccessor}">
+              <h2 class="text-center font-bold pt-2 flex justify-center items-center">
               <span v-if="player.username === game.admin" class="text-sm mr-1 "
                     :class="{'text-yellow-300':game.judge === player.username,'text-yellow-600':!game.judge === player.username}">★</span>
-              {{player.username}}
-            </h2>
+                {{player.username}}
+              </h2>
 
-            <template v-if="game.judge === player.username">
-              <h4 v-if="player.username === username" class="text-sm w-full text-center pb-2">Judge (You)</h4>
-              <h4 v-else class="text-sm w-full text-center pb-2 text-red-600">Judge</h4>
-            </template>
-            <h4 v-else-if="player.username === username"
-                class="text-sm w-full text-center pb-2 text-blue-500 font-bold">You</h4>
-            <template v-else>
-              <h4 class="text-sm w-full text-center pb-2 text-green-500 font-bold" v-if="player.played">Played</h4>
-              <h4 class="text-sm w-full text-center pb-2 blinking-text font-bold text-orange-500" v-else>Waiting...</h4>
-            </template>
+              <template v-if="game.judge === player.username">
+                <h4 v-if="player.username === username" class="text-sm w-full text-center pb-2">Judge (You)</h4>
+                <h4 v-else class="text-sm w-full text-center pb-2 text-red-600">Judge</h4>
+              </template>
+              <h4 v-else-if="player.username === username"
+                  class="text-sm w-full text-center pb-2 text-blue-500 font-bold">You</h4>
+              <template v-else>
+                <h4 class="text-sm w-full text-center pb-2 text-green-500 font-bold" v-if="player.played">Played</h4>
+                <h4 class="text-sm w-full text-center pb-2 blinking-text font-bold text-orange-500" v-else>Waiting...</h4>
+              </template>
 
 
-            <div v-if="isAdmin && !choosingSuccessor" @click="kick(player.username)"
-                 class="cursor-pointer w-3 h-3 kick-badge rounded-full bg-red-600 absolute p-3 flex items-center justify-center">
-              <span class="text-white">⨉</span>
-            </div>
-            <div class="w-3 h-3 wins-badge rounded-full bg-red-600 absolute p-3 flex items-center justify-center">
-              <span class="text-white">{{player.wins}}</span>
+              <div v-if="isAdmin && !choosingSuccessor" @click="kick(player.username)"
+                   class="cursor-pointer w-3 h-3 kick-badge rounded-full bg-red-600 absolute p-3 flex items-center justify-center">
+                <span class="text-white">⨉</span>
+              </div>
+              <div class="w-3 h-3 wins-badge rounded-full bg-red-600 absolute p-3 flex items-center justify-center">
+                <span class="text-white">{{player.wins}}</span>
+              </div>
             </div>
           </div>
-        </div>
-
-      </div>
-
-    </div>
-
-    <div class="w-full flex justify-center mb-3 relative">
-      <div class="w-full flex">
-        <ul class="px-2 notifications-list" v-chat-scroll="{always: false, smooth: true}">
-          <li class="text-gray-300 font-bold" v-for="notification in game.notifications">{{notification}}</li>
-        </ul>
-      </div>
-    </div>
-    <div class="flex w-full justify-center items-center">
-
-      <div v-if="game.previousCard && game.previousCard.text != ''" class="flex w-3/12 pb-2 mx-3 mb-0 flex-col">
-        <div class="flex flex-col w-full items-center font-bold">
-          <h4 class="text-gray-300 mb-0 text-sm">Winner</h4>
-          <p class="text-xl leading-zero mb-1 text-green-600 text-center">{{game.lastWinner}}</p>
-        </div>
-        <card type="black" :text="game.previousCard.text"></card>
-        <div v-if="game.winingCards" class="flex flex-col">
-          <card class="mt-2" v-for="card in game.winingCards" :key="card.text" :text="card.text"></card>
-        </div>
-      </div>
-      <div class="flex w-4/6 px-4">
-        <div class="flex flex-col w-full">
-          <card v-if="game.started" type="black" :pick="game.blackCard.pick" :text="game.blackCard.text">
-          </card>
-          <card v-else type="black" text="">
-
-
-            <div class="flex w-full items-center justify-start flex-col ">
-              <div @click="copyCode" class="flex w-full flex-col">
-                <h1 class="text-center text-xl">Game Code:</h1>
-                <h1 class="text-center text-3xl mt-1">{{code}}</h1>
-                <h1 class="text-center mt-1 text-xs">Click to copy or share the link with your friends</h1>
-              </div>
-
-
-              <button :class="{'disabled': game.players.length < 3}" @click="startGame"
-                      class="btn btn-primary text-sm  font-bold text-center mt-4 mb-3">Start Game
-              </button>
-              <h1 class="text-center text-xl text-orange-500 blinking-text">Waiting for players</h1>
-
-              <h6 v-if="game.players.length < 3" class="text-sm mt-5 text-center"></h6>
-
-            </div>
-
-
-          </card>
-          <a v-show="isJudge" @click="skip" class="text-sm text-white mt-2">Skip This Card?</a>
 
         </div>
 
       </div>
-    </div>
-    <div class="flex px-4 w-full">
-      <input @keyup.enter="sendMessage" v-model="message" type="text"
-             class="mt-3 py-1 bg-white w-full px-2" placeholder="Send a message...">
-    </div>
-    <template v-if="game.started">
-      <div class="flex flex-col w-full mt-4">
-        <div class="flex px-3">
-          <transition name="fade" mode="out-in">
-            <h3 key="your-cards" v-if="shouldShowCards" class="text-white text-xl my-1 font-bold">Your Cards</h3>
-            <h3 key="submissions" v-else class="text-white text-xl my-1 font-bold">Submissions</h3>
-          </transition>
+
+      <div class="w-full flex justify-center mb-3 relative">
+        <div class="w-full flex">
+          <ul class="px-2 notifications-list" v-chat-scroll="{always: false, smooth: true}">
+            <li class="text-gray-300 font-bold" v-for="notification in game.notifications">{{notification}}</li>
+          </ul>
         </div>
-        <div class="deck w-full nowrap px-3 relative overflow-scroll">
-          <transition name="list" mode="out-in">
-            <div key="cards" v-if="shouldShowCards" class="w-full">
-              <div v-for="(card,index) in cards" @click="activeIndex = index"
-                   class="game-card w-1/3 px-1 inline-block pb-2" :key="card.text">
-                <card @play="playCard(card.text)" :active="index === activeIndex" type="white"
-                      :text="card.text"></card>
+      </div>
+      <div class="flex w-full justify-center items-center">
 
-              </div>
-            </div>
-            <div key="judgingCards" class="w-full" v-else-if="game.judgingCards.length > 0">
+        <div v-if="game.previousCard && game.previousCard.text != ''" class="flex w-3/12 pb-2 mx-3 mb-0 flex-col">
+          <div class="flex flex-col w-full items-center font-bold">
+            <h4 class="text-gray-300 mb-0 text-sm">Winner</h4>
+            <p class="text-xl leading-zero mb-1 text-green-600 text-center">{{game.lastWinner}}</p>
+          </div>
+          <card type="black" :text="game.previousCard.text"></card>
+          <div v-if="game.winingCards" class="flex flex-col">
+            <card class="mt-2" v-for="card in game.winingCards" :key="card.text" :text="card.text"></card>
+          </div>
+        </div>
+        <div class="flex w-4/6 px-4">
+          <div class="flex flex-col w-full">
+            <card v-if="game.started" type="black" :pick="game.blackCard.pick" :text="game.blackCard.text">
+            </card>
+            <card v-else type="black" text="">
 
-              <div v-for="(player,index) in game.judgingCards"
-                   :key="`player-${index}`"
-                   @click="activePlayerIndex = index"
-                   class="game-card w-1/3 px-1 inline-block pb-2 relative">
 
-                <card v-for="card in player" :key="card" :judging="true" @pick="pick(index)"
-                      type="white"
-                      class="mb-2"
-                      :text="card"></card>
-                <div class="flex justify-center w-full">
-                  <button v-if="game.judging && isJudge" @click="pick(index)" class="btn btn-primary btn-sm">Pick
-                  </button>
+              <div class="flex w-full items-center justify-start flex-col ">
+                <div @click="copyCode" class="flex w-full flex-col">
+                  <h1 class="text-center text-xl">Game Code:</h1>
+                  <h1 class="text-center text-3xl mt-1">{{code}}</h1>
+                  <h1 class="text-center mt-1 text-xs">Click to copy or share the link with your friends</h1>
                 </div>
+
+
+                <button :class="{'disabled': game.players.length < 3}" @click="startGame"
+                        class="btn btn-primary text-sm  font-bold text-center mt-4 mb-3">Start Game
+                </button>
+                <h1 class="text-center text-xl text-orange-500 blinking-text">Waiting for players</h1>
+
+                <h6 v-if="game.players.length < 3" class="text-sm mt-5 text-center"></h6>
+
               </div>
 
-            </div>
-            <div key="waiting" class="w-full justify-center" v-else>
-              <div v-for="index in game.players.length - 1" class="game-card w-1/3 px-1 inline-block pb-2"
-                   :key="`${index}-waiting`">
-                <card type="white" :text="''">
-                  <h3 class="text-center">Waiting for players to play</h3>
-                </card>
-              </div>
 
-            </div>
+            </card>
+            <a v-show="isJudge" @click="skip" class="text-sm text-white mt-2">Skip This Card?</a>
 
-          </transition>
-        </div>
-
-      </div>
-
-    </template>
-    <template v-else>
-      <div class="flex flex-col w-full mt-4">
-        <div class="flex px-3">
-          <h3 class="text-white text-xl my-1 font-bold">Your Cards</h3>
-
-        </div>
-        <div class="deck w-full nowrap overflow-scroll px-3">
-          <div class="flex justify-center">
-            <h1 class="text-white text-xl text-gray-600 mt-4">The game has not started yet</h1>
           </div>
-        </div>
 
+        </div>
+      </div>
+      <div class="flex px-4 w-full">
+        <input @keyup.enter="sendMessage" v-model="message" type="text"
+               class="mt-3 py-1 bg-white w-full px-2" placeholder="Send a message...">
+      </div>
+    </div>
+<div class="w-full lg:w-8/12">
+  <template v-if="game.started">
+    <div class="flex flex-col w-full mt-4 ">
+      <div class="flex px-3">
+        <transition name="fade" mode="out-in">
+          <h3 key="your-cards" v-if="shouldShowCards" class="text-white text-xl my-1 font-bold">Your Cards</h3>
+          <h3 key="submissions" v-else class="text-white text-xl my-1 font-bold">Submissions</h3>
+        </transition>
+      </div>
+      <div class="deck w-full nowrap px-3 relative overflow-scroll">
+        <transition name="list" mode="out-in">
+          <div key="cards" v-if="shouldShowCards" class="w-full flex-wrap justify-center">
+            <div v-for="(card,index) in cards" @click="activeIndex = index"
+                 class="game-card w-1/3 sm:w-2/12 md:w-3/8 lg:w-2/8 xl:w-1/7 px-1 inline-block pb-2" :key="card.text">
+              <card @play="playCard(card.text)" :active="index === activeIndex" type="white"
+                    :text="card.text"></card>
+
+            </div>
+          </div>
+          <div key="judgingCards" class="w-full flex-wrap justify-center" v-else-if="game.judgingCards.length > 0">
+
+            <div v-for="(player,index) in game.judgingCards"
+                 :key="`player-${index}`"
+                 @click="activePlayerIndex = index"
+                 class="game-card w-1/3 sm:w-2/12 md:w-3/8 lg:w-2/8 xl:w-1/7 px-1 inline-block pb-2 relative">
+
+              <card v-for="card in player" :key="card" :judging="true" @pick="pick(index)"
+                    type="white"
+                    class="mb-2"
+                    :text="card"></card>
+              <div class="flex justify-center w-full">
+                <button v-if="game.judging && isJudge" @click="pick(index)" class="btn btn-primary btn-sm">Pick
+                </button>
+              </div>
+            </div>
+
+          </div>
+          <div key="waiting" class="w-full flex-wrap justify-center" v-else>
+            <div v-for="index in game.players.length - 1" class="game-card w-1/3 sm:w-2/12 md:w-3/8 lg:w-2/8 xl:w-1/7 px-1 inline-block pb-2"
+                 :key="`${index}-waiting`">
+              <card type="white" :text="''">
+                <h3 class="text-center">Waiting for players to play</h3>
+              </card>
+            </div>
+
+          </div>
+
+        </transition>
       </div>
 
-    </template>
+    </div>
+
+  </template>
+  <template v-else>
+    <div class="flex flex-col w-full mt-4">
+      <div class="flex px-3">
+        <h3 class="text-white text-xl my-1 font-bold">Your Cards</h3>
+
+      </div>
+      <div class="deck w-full nowrap overflow-scroll px-3">
+        <div class="flex justify-center">
+          <h1 class="text-white text-xl text-gray-600 mt-4">The game has not started yet</h1>
+        </div>
+      </div>
+
+    </div>
+
+  </template>
+</div>
+
 
   </div>
 </template>

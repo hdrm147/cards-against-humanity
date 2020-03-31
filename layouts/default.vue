@@ -1,6 +1,6 @@
 <template>
   <div class="flex w-full justify-center game">
-    <nuxt class="w-full sm:w-2/3 md:w-2/3 lg:w-2/4 xl:w-1/5"/>
+    <nuxt class="w-full"/>
   </div>
 </template>
 
