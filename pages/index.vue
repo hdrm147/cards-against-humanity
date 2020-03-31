@@ -1,5 +1,5 @@
 <template>
-  <div class="flex w-full h-screen items-center justify-center">
+  <div class="flex w-full h-screen items-center justify-center flex-col items-center">
     <div class="card bg-gray-800 w-full p-4 rounded shadow">
       <h2 class="text-white text-2xl">Welcome to</h2>
       <h1 class="text-white text-4xl font-bold leading-none">Cards Against Humanity</h1>
@@ -86,6 +86,14 @@
       </div>
 
     </div>
+    <div class="flex w-full mt-4 px-4 flex-col items-center">
+      <img class="w-1/6 rounded-full" src="/telegram.jpg" alt="">
+      <span class="text-white text-center mt-2">
+           <a target="_blank" href="https://t.me/cards_against_humanity" class="text-indigo-400 font-bold text-center">Click Here</a>
+  Join our telegram group to find players and share feedback
+    </span>
+    </div>
+
   </div>
 </template>
 
@@ -666,7 +674,7 @@
 
   input {
     @apply text-gray-900 rounded px-3 py-3;
-transition: all 0.3s ease-in;
+    transition: all 0.3s ease-in;
   }
 
   button:focus {
