@@ -25,3 +25,14 @@ You can add your custom cards and select the expansion packs that you want to pl
 - [ ] Add Unit Tests
 - [ ] Add Custom Cards Batch Import
 - [ ] Implement PWA
+
+
+### License
+Cards Against Humanity is licensed under a [Creative Commons Attribution-ShareAlike 2.0
+International License][cc-by-sa].
+
+[![CC BY-SA 2.0][cc-by-sa-image]][cc-by-sa]
+
+[cc-by-sa]: http://creativecommons.org/licenses/by-sa/2.0/
+[cc-by-sa-image]: https://licensebuttons.net/l/by-sa/2.0/88x31.png
+[cc-by-sa-shield]: https://img.shields.io/badge/License-CC%20BY--SA%204.0-lightgrey.svg
