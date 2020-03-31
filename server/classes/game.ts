@@ -185,7 +185,6 @@ export class Game {
   }
 
   check() {
-    console.log(this.players);
     let waitingPlayers = this.players.filter(player => !player.played && (this.judge.username != player.username));
     if (waitingPlayers.length === 0) {
       this.shuffledJudgingCards = this.players.filter(player => player.username != this.judge.username).map(player => {
@@ -193,6 +192,7 @@ export class Game {
       }).sort(() => Math.random() - 0.5);
       this.sync(`${this.judge.username} should start judging now`, 'start');
     }
+    console.log(`Checking game: ${this.code}`);
     console.log(`Waiting Players: ${waitingPlayers.length}`);
   }
 
