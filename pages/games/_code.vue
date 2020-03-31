@@ -11,10 +11,10 @@
                placeholder="Game Code...">
 
         <input v-model="username" type="text" class="mt-5 w-full"
-               placeholder="Enter Your username...">
+               placeholder="Pick a username...">
         <input v-model="password" type="text" class="mt-5 w-full"
-               placeholder="Enter Your password...">
-
+               placeholder="Set a password (Optional)">
+        <small class="leading-tight mt-2 text-blue-300">The password is optional, but you might need it if you want to join if you refreshed the page or changed the device</small>
         <div class="flex flex-col items-center w-full -mx-2 justify-center">
           <div class="flex w-full my-2">
             <span class="text-white text-base text-red-600 font-bold"> {{errorMessage}}</span>

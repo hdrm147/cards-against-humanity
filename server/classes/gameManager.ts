@@ -78,7 +78,7 @@ export class GameManager {
         } else {
           return {
             success: false,
-            message: 'Wrong Password'
+            message: 'Wrong password, enter the password you set the first time.'
           }
         }
       } else {
