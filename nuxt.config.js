@@ -1,3 +1,5 @@
+const fs = require('fs');
+require('dotenv').config()
 module.exports = {
   mode: 'spa',
   /*
@@ -31,8 +33,12 @@ module.exports = {
   },
 
   server: {
-    port: 3000, // default: 3000
-    host: '0.0.0.0' // default: localhost
+    port: 3000,
+    host: '0.0.0.0',
+    https: {
+      key: fs.readFileSync(process.env.SSL_KEY_PATH),
+      cert: fs.readFileSync(process.env.SSL_CERT_PATH)
+    }
   },
   /*
   ** Customize the progress-bar color
@@ -50,8 +56,8 @@ module.exports = {
   ** Nuxt.js dev-modules
   */
   buildModules: [
+    '@nuxtjs/dotenv',
     '@nuxt/typescript-build',
-    // Doc: https://github.com/nuxt-community/nuxt-tailwindcss
     '@nuxtjs/tailwindcss',
   ],
 
